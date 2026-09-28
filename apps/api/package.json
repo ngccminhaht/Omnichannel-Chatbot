@@ -1,0 +1,27 @@
+{
+  "name": "@chat2/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "worker": "tsx watch src/worker.ts",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@fastify/sensible": "^6.0.3",
+    "fastify-raw-body": "^5.0.0",
+    "fastify": "^5.3.3",
+    "@chat2/contracts": "file:../../packages/contracts",
+    "pg": "^8.16.3",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "@types/node": "^22.15.21",
+    "@types/pg": "^8.15.5"
+  }
+}

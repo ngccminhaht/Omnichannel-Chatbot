@@ -1,0 +1,16 @@
+{
+  "name": "chat2",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.10.0",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "npm run dev --workspace=@chat2/api",
+    "build": "npm run build --workspace=@chat2/contracts && npm run build --workspace=@chat2/api",
+    "typecheck": "npm run build --workspace=@chat2/contracts && npm run typecheck --workspace=@chat2/api && npm run typecheck --workspace=@chat2/contracts",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

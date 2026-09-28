@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+coverage/
+.pnpm-store/
+.npm-cache/
+.docker-config/
+apps/web/public/config.local.js

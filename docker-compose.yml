@@ -1,0 +1,65 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    env_file: .env
+    environment:
+      NODE_ENV: production
+    ports:
+      - "13000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  worker:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    env_file: .env
+    environment:
+      NODE_ENV: production
+    command: ["sh", "-c", "node apps/api/dist/migrate.js && node apps/api/dist/worker.js"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "18080:80"
+    depends_on:
+      - api
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: chat2
+      POSTGRES_PASSWORD: chat2
+      POSTGRES_DB: chat2
+    ports:
+      - "15432:5432"
+    volumes:
+      - chat2-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chat2 -d chat2"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "16379:6379"
+    volumes:
+      - chat2-redis:/data
+
+volumes:
+  chat2-postgres:
+  chat2-redis:
