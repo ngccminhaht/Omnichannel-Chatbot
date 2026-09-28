@@ -5,7 +5,8 @@
   "packageManager": "pnpm@10.10.0",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "dev": "npm run dev --workspace=@chat2/api",
+    "dev": "python3 -m http.server 3000 --directory apps/web/public",
+    "dev:api": "npm run dev --workspace=@chat2/api",
     "build": "npm run build --workspace=@chat2/contracts && npm run build --workspace=@chat2/api",
     "typecheck": "npm run build --workspace=@chat2/contracts && npm run typecheck --workspace=@chat2/api && npm run typecheck --workspace=@chat2/contracts",
     "test": "npm run test --workspaces --if-present"
